@@ -88,18 +88,18 @@ class ScaffoldWithNavBar extends StatelessWidget {
               ),
             )
             .toList(),
-        currentIndex: currentIndex(context),
-        onTap: (index) => onItemTap(index, context),
+        currentIndex: _currentIndex(context),
+        onTap: (index) => _onItemTap(index, context),
       ),
     );
   }
 
-  int currentIndex(BuildContext context) {
+  int _currentIndex(BuildContext context) {
     final String location = GoRouterState.of(context).location;
     return shellRouteData.firstWhere((e) => location.startsWith(e.path)).index;
   }
 
-  void onItemTap(int index, BuildContext context) {
+  void _onItemTap(int index, BuildContext context) {
     final location = shellRouteData[index].path;
     context.go(location);
   }
