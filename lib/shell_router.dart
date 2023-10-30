@@ -95,7 +95,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
   }
 
   int _currentIndex(BuildContext context) {
-    final String location = GoRouterState.of(context).location;
+    final String location = GoRouterState.of(context).uri.toString();
     return shellRouteData.firstWhere((e) => location.startsWith(e.path)).index;
   }
 

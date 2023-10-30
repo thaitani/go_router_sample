@@ -15,6 +15,26 @@ final router = GoRouter(
       },
       routes: shellRoute,
     ),
+    GoRoute(
+      path: '/test',
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Test'),
+          ),
+          body: const Center(
+            child: Text('Test'),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => context.go('/'),
+          ),
+        );
+      },
+      onExit: (context) {
+        print('onExit');
+        return true;
+      },
+    ),
     ...$appRoutes,
   ],
 );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:go_router_sample/shell_router.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({
@@ -14,15 +13,12 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(title ?? 'HomePage'),
-            ElevatedButton(
-              onPressed: () => const ShellHomeRoute().go(context),
-              child: const Text('shell1'),
-            ),
-          ],
+        child: ListView.builder(
+          primary: true,
+          itemBuilder: (context, i) => ListTile(
+            title: Text('Item $i'),
+            onTap: () => context.push('/test'),
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
