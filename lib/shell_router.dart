@@ -129,6 +129,7 @@ class ShellInShellRoute extends ShellRouteData {
     return Column(
       children: [
         SingleChildScrollView(
+          padding: const EdgeInsets.all(8.0),
           scrollDirection: Axis.horizontal,
           child: Row(
             children: List.generate(
@@ -138,11 +139,14 @@ class ShellInShellRoute extends ShellRouteData {
                 child: InkWell(
                   onTap: () => context.go('/shell2/test2?param=$index'),
                   child: Container(
+                    alignment: Alignment.center,
                     width: 70,
                     height: 30,
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(4.0),
                     ),
+                    child: Text('index $index'),
                   ),
                 ),
               ),
