@@ -39,9 +39,11 @@ class ShellHomeRoute extends GoShellRouteData {
   }
 }
 
-@TypedGoRoute<ShellHome2Route>(
-  path: '/shell2',
-)
+@TypedGoRoute<ShellHome2Route>(path: '/shell2', routes: [
+  TypedShellRoute<ShellInShellRoute>(routes: [
+    TypedGoRoute<TestRoute>(path: TestRoute.path),
+  ])
+])
 class ShellHome2Route extends GoShellRouteData {
   const ShellHome2Route();
 
@@ -56,8 +58,9 @@ class ShellHome2Route extends GoShellRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const HomePage2(
-      title: 'Shell2',
+    return HomePage2(
+      title: path,
+      onPressed: () => const TestRoute().go(context),
     );
   }
 }
@@ -78,6 +81,9 @@ class ScaffoldWithNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Shell'),
+      ),
       body: child,
       bottomNavigationBar: BottomNavigationBar(
         items: shellRouteData
@@ -102,5 +108,59 @@ class ScaffoldWithNavBar extends StatelessWidget {
   void _onItemTap(int index, BuildContext context) {
     final location = shellRouteData[index].path;
     context.go(location);
+  }
+}
+
+final GlobalKey<NavigatorState> _navigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'shellInShell');
+
+class ShellInShellRoute extends ShellRouteData {
+  const ShellInShellRoute();
+
+  static final $navigatorKey = _navigatorKey;
+
+  @override
+  Widget builder(BuildContext context, GoRouterState state, Widget navigator) {
+    return Column(
+      children: [
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: List.generate(
+              6,
+              (index) => Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: InkWell(
+                  onTap: () => context.go('/shell2/test2?param=$index'),
+                  child: Container(
+                    width: 70,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Expanded(child: navigator),
+      ],
+    );
+  }
+}
+
+class TestRoute extends GoRouteData {
+  const TestRoute({this.param});
+
+  static const String path = 'test2';
+  static final $parentNavigatorKey = _navigatorKey;
+  final String? param;
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return HomePage2(
+      title: '${state.uri}',
+      onPressed: () => context.go('/shell2'),
+    );
   }
 }

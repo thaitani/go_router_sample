@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.skip_next),
+        child: const Text('1'),
         onPressed: () => context.go('/2'),
       ),
     );
@@ -33,9 +33,11 @@ class HomePage2 extends StatelessWidget {
   const HomePage2({
     super.key,
     this.title,
+    this.onPressed,
   });
 
   final String? title;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,8 @@ class HomePage2 extends StatelessWidget {
         child: Text(title ?? 'HomePage2'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => context.go('/'),
+        onPressed: onPressed,
+        child: const Text('2'),
       ),
     );
   }
