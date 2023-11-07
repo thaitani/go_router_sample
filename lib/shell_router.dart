@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:go_router_sample/router.dart';
 
 import 'home_page.dart';
 
@@ -21,6 +22,8 @@ abstract class GoShellRouteData extends GoRouteData {
 )
 class ShellHomeRoute extends GoShellRouteData {
   const ShellHomeRoute();
+
+  static final $navigatorKey = shellNavigatorKey;
 
   @override
   String get label => 'ホーム';
@@ -46,6 +49,7 @@ class ShellHomeRoute extends GoShellRouteData {
 ])
 class ShellHome2Route extends GoShellRouteData {
   const ShellHome2Route();
+  static final $navigatorKey = shellNavigatorKey;
 
   @override
   String get label => '記事';
@@ -111,13 +115,14 @@ class ScaffoldWithNavBar extends StatelessWidget {
   }
 }
 
-final GlobalKey<NavigatorState> _navigatorKey =
+final GlobalKey<NavigatorState> _shellInShellNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'shellInShell');
 
 class ShellInShellRoute extends ShellRouteData {
   const ShellInShellRoute();
 
-  static final $navigatorKey = _navigatorKey;
+  static final $navigatorKey = _shellInShellNavigatorKey;
+  static final $parentNavigatorKey = shellNavigatorKey;
 
   @override
   Widget builder(BuildContext context, GoRouterState state, Widget navigator) {
@@ -154,7 +159,7 @@ class TestRoute extends GoRouteData {
   const TestRoute({this.param});
 
   static const String path = 'test2';
-  static final $parentNavigatorKey = _navigatorKey;
+  static final $parentNavigatorKey = _shellInShellNavigatorKey;
   final String? param;
   @override
   Widget build(BuildContext context, GoRouterState state) {

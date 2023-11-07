@@ -40,6 +40,7 @@ RouteBase get $shellHome2Route => GoRouteData.$route(
       routes: [
         ShellRouteData.$route(
           navigatorKey: ShellInShellRoute.$navigatorKey,
+          parentNavigatorKey: ShellInShellRoute.$parentNavigatorKey,
           factory: $ShellInShellRouteExtension._fromState,
           routes: [
             GoRouteData.$route(

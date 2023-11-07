@@ -6,10 +6,14 @@ import 'home_page.dart';
 
 part 'router.g.dart';
 
+final GlobalKey<NavigatorState> shellNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'shell');
+
 final router = GoRouter(
-  initialLocation: '/shell1',
+  initialLocation: '/shell2',
   routes: [
     ShellRoute(
+      navigatorKey: shellNavigatorKey,
       builder: (context, state, child) {
         return ScaffoldWithNavBar(child: child);
       },
